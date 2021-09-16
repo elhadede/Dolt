@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Gun.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://4374190.png" type="Texture" id=2]
+[ext_resource path="res://player.gd" type="Script" id=3]
+[ext_resource path="res://ammo.gd" type="Script" id=4]
+
+[sub_resource type="ViewportTexture" id=1]
+viewport_path = NodePath("Head/Sprite3D/Viewport")
+
+[sub_resource type="SphereShape" id=2]
+
+[node name="player" type="KinematicBody"]
+collision_mask = 3
+script = ExtResource( 3 )
+
+[node name="Head" type="Camera" parent="."]
+current = true
+
+[node name="Gun" type="MeshInstance" parent="Head"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.5, -0.29, -0.818 )
+mesh = ExtResource( 1 )
+material/0 = null
+material/1 = null
+
+[node name="emit" type="Position3D" parent="Head/Gun"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.497762, 0, 0 )
+
+[node name="pointer" type="Sprite3D" parent="Head"]
+transform = Transform( 0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.03, 0, 0, -1 )
+texture = ExtResource( 2 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Head"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, -0.6, -1 )
+texture = SubResource( 1 )
+
+[node name="Viewport" type="Viewport" parent="Head/Sprite3D"]
+size = Vector2( 42, 14 )
+transparent_bg = true
+render_target_v_flip = true
+script = ExtResource( 4 )
+
+[node name="ammo" type="Label" parent="Head/Sprite3D/Viewport"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "HELLO"
+
+[node name="RayCast" type="RayCast" parent="Head"]
+transform = Transform( 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 )
+enabled = true
+cast_to = Vector3( 0, 90, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 2 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[node name="timer" type="Timer" parent="."]
